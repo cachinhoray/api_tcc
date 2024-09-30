@@ -1,11 +1,11 @@
 const db = require('../database/connection'); 
 
 module.exports = {
-    async listarUsuarios(request, response) {
+    async listarOrcamento(request, response) {
         try {            
             return response.status(200).json({
                 sucesso: true, 
-                mensagem: 'Lista de usuários.', 
+                mensagem: 'Lista de orçamento.', 
                 dados: null
             });
         } catch (error) {
@@ -18,11 +18,11 @@ module.exports = {
     }, 
 
 
-    async cadastrarUsuario(request, response) {
+    async cadastrarOrcamento(request, response) {
         try {            
             return response.status(200).json({
                 sucesso: true, 
-                mensagem: 'Cadastro usuario.', 
+                mensagem: 'Cadastro orcamento.', 
                 dados: null
             });
         } catch (error) {
@@ -35,11 +35,11 @@ module.exports = {
     }, 
 
 
-    async editarUsuarios(request, response) {
+    async editarOrcamento(request, response) {
         try {            
             return response.status(200).json({
                 sucesso: true, 
-                mensagem: 'editar  usuários.', 
+                mensagem: 'editar  orcamento.', 
                 dados: null
             });
         } catch (error) {
@@ -52,11 +52,11 @@ module.exports = {
     }, 
 
 
-    async apagarUsuarios(request, response) {
+    async apagarOrcamento(request, response) {
         try {            
             return response.status(200).json({
                 sucesso: true, 
-                mensagem: 'apagar s usuários.', 
+                mensagem: 'apagar  orcamento.', 
                 dados: null
             });
         } catch (error) {

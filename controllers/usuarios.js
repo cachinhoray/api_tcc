@@ -2,11 +2,18 @@ const db = require('../database/connection');
 
 module.exports = {
     async listarUsuarios(request, response) {
-        try {            
+        try {     
+            
+            const sql = `select * from usuarios;`; 
+
+            const usuarios = await db.query(sql); 
+            const nItens = usuarios[0].length;
+
             return response.status(200).json({
                 sucesso: true, 
                 mensagem: 'Lista de usuários.', 
-                dados: null
+                dados: usuarios[0], 
+                nItens
             });
         } catch (error) {
             return response.status(500).json({
@@ -20,6 +27,14 @@ module.exports = {
 
     async cadastrarUsuario(request, response) {
         try {            
+
+            const sql = `INSERT INTO USUARIOS (usu_nome, usu_email, usu_senha) VALUES 
+(?, ?, ?);`
+
+            const execSql = await db.query(sql,values);
+
+            
+
             return response.status(200).json({
                 sucesso: true, 
                 mensagem: 'Cadastro usuario.', 

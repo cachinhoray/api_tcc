@@ -27,18 +27,21 @@ module.exports = {
 
     async cadastrarUsuario(request, response) {
         try {            
+            const { usu_nome, usu_email, usu_senha } = request.body;
 
-            const sql = `INSERT INTO USUARIOS (usu_nome, usu_email, usu_senha) VALUES 
-(?, ?, ?);`
+            const sql = `INSERT INTO USUARIOS (usu_nome, usu_email, usu_senha) 
+            VALUES (?, ?, ?);`
+
+            const values = [usu_nome, usu_email, usu_senha];
 
             const execSql = await db.query(sql,values);
-
+            const usu_id = execSql[0].insertId;
             
 
             return response.status(200).json({
                 sucesso: true, 
                 mensagem: 'Cadastro usuario.', 
-                dados: null
+                dados: usu_id                
             });
         } catch (error) {
             return response.status(500).json({
@@ -52,10 +55,20 @@ module.exports = {
 
     async editarUsuarios(request, response) {
         try {            
+            const { usu_nome, usu_email, usu_senha } = request.body;
+
+            const {usu_id} = request.params;
+
+            `UPDATE USUARIOS SET usu_nome = ? usu_email = ?, usu_senha = ? WHERE usu_id = ?`;
+
+            const values = [usu_nome, usu_email, usu_senha];
+
+            const atualizaDados = await db.query(sql,values);
+
             return response.status(200).json({
                 sucesso: true, 
-                mensagem: 'editar  usuários.', 
-                dados: null
+                mensagem: `Usuário ${usu_id} atualizado com sucesso!`, 
+                dados: atualizaDados[0].affectedRows
             });
         } catch (error) {
             return response.status(500).json({

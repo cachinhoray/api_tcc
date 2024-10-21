@@ -25,11 +25,22 @@ module.exports = {
 
 
     async cadastrarOrcamento(request, response) {
-        try {            
+        try {        
+            
+            const { prod_id, orc_mensagem, orc_nome, orc_contato } = request.body;
+
+            const sql = `INSERT INTO ORCAMENTO (prod_id, orc_mensagem, orc_nome, orc_contato) 
+            VALUES (?, ?, ?, ?);`
+
+            const values = [prod_id, orc_mensagem, orc_nome, orc_contato];
+
+            const execSql = await db.query(sql,values);
+            const orc_id = execSql[0].insertId;
+
             return response.status(200).json({
                 sucesso: true, 
                 mensagem: 'Cadastro orcamento.', 
-                dados: null
+                dados: orc_id
             });
         } catch (error) {
             return response.status(500).json({

@@ -26,11 +26,22 @@ module.exports = {
 
 
     async cadastrarProdutos(request, response) {
-        try {            
+        try {           
+            
+            const { prod_nome, prod_img, prod_valor_venda, prod_valor_aluguel, prod_descricao } = request.body;
+
+            const sql = `INSERT INTO PRODUTOS (prod_nome, prod_img, prod_valor_venda, prod_valor_aluguel, prod_descricao) 
+            VALUES (?, ?, ?, ?, ?);`
+
+            const values = [prod_nome, prod_img, prod_valor_venda, prod_valor_aluguel, prod_descricao];
+
+            const execSql = await db.query(sql,values);
+            const prod_id = execSql[0].insertId;
+
             return response.status(200).json({
                 sucesso: true, 
                 mensagem: 'Cadastro produto.', 
-                dados: null
+                dados: prod_id
             });
         } catch (error) {
             return response.status(500).json({

@@ -59,7 +59,7 @@ module.exports = {
 
             const {usu_id} = request.params;
 
-            `UPDATE USUARIOS SET usu_nome = ? usu_email = ?, usu_senha = ? WHERE usu_id = ?`;
+            const sql = `UPDATE USUARIOS SET usu_nome = ?, usu_email = ?, usu_senha = ? WHERE usu_id = ?;`;
 
             const values = [usu_nome, usu_email, usu_senha];
 

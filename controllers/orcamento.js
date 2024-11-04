@@ -54,10 +54,21 @@ module.exports = {
 
     async editarOrcamento(request, response) {
         try {            
+
+            const { orc_mensagem, orc_nome, orc_contato } = request.body;
+
+            const {prod_id} = request.params;
+
+            const sql = `UPDATE ORCAMENTO SET orc_mensagem = ? , orc_nome = ? , orc_contato = ? WHERE prod_id = ?;`;
+
+            const values = [orc_mensagem, orc_nome, orc_contato];
+
+            const atualizaDados = await db.query (sql, values);
+
             return response.status(200).json({
                 sucesso: true, 
-                mensagem: 'editar  orcamento.', 
-                dados: null
+                mensagem: 'Orcamento ${prod_id} atualizado com sucesso!', 
+                dados: atualizaDados[0].affectedRows
             });
         } catch (error) {
             return response.status(500).json({

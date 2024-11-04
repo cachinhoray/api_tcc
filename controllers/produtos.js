@@ -54,11 +54,21 @@ module.exports = {
 
 
     async editarProdutos(request, response) {
-        try {            
+        try {          
+            const {prod_nome, prod_img, prod_valor_venda, prod_valor_aluguel, prod_descricao}  = request.body;
+
+            const {prod_id} = request.params;
+
+            const sql = `UPDATE PRODUTOS SET prod_nome = ? prod_img = ? prod_valor_venda = ?, prod_valor_aluguel = ?, prod_descricao = ? WHERE prod_id = ?; `;
+
+            const values = [prod_nome, prod_img, prod_valor_venda, prod_valor_aluguel, prod_descricao];
+
+            const atualizaDados = await db.query (sql, values);
+
             return response.status(200).json({
                 sucesso: true, 
-                mensagem: 'editar  produtos.', 
-                dados: null
+                mensagem: `Produto ${prod_id} atualizado com sucesso!`, 
+                dados: atualizaDados[0].affectedRows
             });
         } catch (error) {
             return response.status(500).json({

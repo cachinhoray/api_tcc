@@ -61,7 +61,7 @@ module.exports = {
 
             const sql = `UPDATE PRODUTOS SET prod_nome = ? prod_img = ? prod_valor_venda = ?, prod_valor_aluguel = ?, prod_descricao = ? WHERE prod_id = ?; `;
 
-            const values = [prod_nome, prod_img, prod_valor_venda, prod_valor_aluguel, prod_descricao];
+            const values = [prod_nome, prod_img, prod_valor_venda, prod_valor_aluguel, prod_descricao, prod_id];
 
             const atualizaDados = await db.query (sql, values);
 
@@ -82,10 +82,19 @@ module.exports = {
 
     async apagarProdutos(request, response) {
         try {            
+
+            const {prod_id} = request.params
+
+            const sql = `DELETE FROM produtos WHERE prod_id = ?`;
+
+            const values = [prod_id];
+
+            const excluir = await db.query(sql, values);
+
             return response.status(200).json({
                 sucesso: true, 
-                mensagem: 'apagar  produtos.', 
-                dados: null
+                mensagem: `Produto ${prod_id} excluido com sucesso!`, 
+                dados: excluir[0].affectedRows
             });
         } catch (error) {
             return response.status(500).json({

@@ -61,7 +61,7 @@ module.exports = {
 
             const sql = `UPDATE USUARIOS SET usu_nome = ?, usu_email = ?, usu_senha = ? WHERE usu_id = ?;`;
 
-            const values = [usu_nome, usu_email, usu_senha];
+            const values = [usu_nome, usu_email, usu_senha, usu_id];
 
             const atualizaDados = await db.query(sql,values);
 
@@ -82,10 +82,19 @@ module.exports = {
 
     async apagarUsuarios(request, response) {
         try {            
+
+            const {usu_id} = request.params
+
+            const sql = `DELETE FROM usuarios WHERE usu_id = ?`;
+
+            const values = [usu_id];
+
+            const excluir = await db.query(sql, values);
+
             return response.status(200).json({
                 sucesso: true, 
-                mensagem: 'apagar s usuários.', 
-                dados: null
+                mensagem: `Usuário ${usu_id} excluido com sucesso!`, 
+                dados: excluir[0].affectedRows
             });
         } catch (error) {
             return response.status(500).json({

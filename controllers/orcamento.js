@@ -57,17 +57,17 @@ module.exports = {
 
             const { orc_mensagem, orc_nome, orc_contato } = request.body;
 
-            const {prod_id} = request.params;
+            const {orc_id} = request.params;
 
-            const sql = `UPDATE ORCAMENTO SET orc_mensagem = ? , orc_nome = ? , orc_contato = ? WHERE prod_id = ?;`;
+            const sql = `UPDATE ORCAMENTO SET orc_mensagem = ? , orc_nome = ? , orc_contato = ? WHERE orc_id = ?;`;
 
-            const values = [orc_mensagem, orc_nome, orc_contato];
+            const values = [orc_mensagem, orc_nome, orc_contato, orc_id];
 
             const atualizaDados = await db.query (sql, values);
 
             return response.status(200).json({
                 sucesso: true, 
-                mensagem: 'Orcamento ${prod_id} atualizado com sucesso!', 
+                mensagem: `Orcamento ${orc_id} atualizado com sucesso!`, 
                 dados: atualizaDados[0].affectedRows
             });
         } catch (error) {
@@ -82,10 +82,19 @@ module.exports = {
 
     async apagarOrcamento(request, response) {
         try {            
+
+            const {orc_id} = request.params
+
+            const sql = `DELETE FROM produtos WHERE orc_id = ?`;
+
+            const values = [orc_id];
+
+            const excluir = await db.query(sql, values);
+
             return response.status(200).json({
                 sucesso: true, 
-                mensagem: 'apagar  orcamento.', 
-                dados: null
+                mensagem: `Orcamento ${orc_id} excluido com sucesso!`, 
+                dados: excluir[0].affectedRows
             });
         } catch (error) {
             return response.status(500).json({

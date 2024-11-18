@@ -4,9 +4,9 @@ INSERT INTO USUARIOS (usu_nome, usu_email, usu_senha) VALUES
 ('Carlos Souza', 'carlos.souza@email.com', 'senha789');
 
 INSERT INTO PRODUTOS (prod_nome, prod_img, prod_valor_venda, prod_valor_aluguel, prod_descricao) VALUES 
-('Produto A', 'img_a.png', 500.00, 50.00, 'Descrição do Produto A'),
-('Produto B', 'img_b.png', 700.00, 70.00, 'Descrição do Produto B'),
-('Produto C', 'img_c.png', 900.00, 90.00, 'Descrição do Produto C');
+('Produto A', 'img_a.jpg', 500.00, 50.00, 'Descrição do Produto A'),
+('Produto B', 'img_b.jpg', 700.00, 70.00, 'Descrição do Produto B'),
+('Produto C', 'img_c.jpg', 900.00, 90.00, 'Descrição do Produto C');
 
 INSERT INTO ORCAMENTO (prod_id, orc_mensagem, orc_nome, orc_contato) VALUES 
 (1, 'Preciso de mais informações sobre o Produto A.', 'João Silva', 'joao.silva@email.com'),

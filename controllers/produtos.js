@@ -1,4 +1,16 @@
 const db = require('../database/connection'); 
+var fse = require('fs-extra');
+
+function geraUrl (prd) {    
+    // garantir que valores em branco carreguem algo
+    let img = prd ? prd : 'sem_img.jpg';
+    // verifica se imagem existe
+    if (!fse.existsSync('./public/' + img)) {
+        img = 'sem_img.jpg';
+    } 
+    // return 'http://10.67.22.144:3333/public/upload/produtos/' + img; // para usar com img html
+    return '/public/' + img; //para usar no image do nextjs
+}
 
 module.exports = {
     async listarProdutos(request, response) {
@@ -7,12 +19,18 @@ module.exports = {
             const sql = `select * from produtos;`; 
 
             const produtos = await db.query(sql); 
-            const nItens = produtos[0].length;
+            const nItens = produtos[0].length; 
+
+            // Itera sobre os usuários e formata o CPF
+            const produtosImg = produtos[0].map(produto => ({
+                ...produto,
+                prod_img: geraUrl(produto.prod_img),                 
+            }));
 
             return response.status(200).json({
                 sucesso: true, 
                 mensagem: 'Lista de produtos.', 
-                dados: produtos[0],
+                dados: produtosImg,
                 nItens
             });
         } catch (error) {
